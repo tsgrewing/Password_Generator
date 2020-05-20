@@ -1,8 +1,8 @@
 var possibleChars = [];
 var lowercaseChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var uppercaseChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var numericChars= ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-var specialChars = ["!", "$", "%", "&", "?", "@", "*", "+", "=", "<", ">", "_", "-", "."];
+var numericChars= ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var specialChars = ["!", "#", "$", "%", "&,", "(", ")", "*", "+", "-", ".", "<", "=", ">", "?", "@", "[", "]", "^", "_", "{", "}", "~"];
 var passwordLength;
 var lowercase;
 var uppercase;
@@ -38,11 +38,11 @@ var generateBtn = document.querySelector("#generate");
   // Prompt if password should contain lowercase letters
   function lowercasePrompt() {
     lowercase = prompt("Should your password include lowercase letters? (please enter 'y' or 'n')");
-    if (lowercase === 'y') {
+    if (lowercase === "y") {
       possibleChars = possibleChars.concat(lowercaseChars);
       uppercasePrompt();
     }
-    else if (lowercase === 'n') {
+    else if (lowercase === "n") {
       uppercasePrompt();
     }
     else {
@@ -54,11 +54,11 @@ var generateBtn = document.querySelector("#generate");
   // prompt if password should contain uppercase letters
   function uppercasePrompt() {
     uppercase = prompt("Should your password include uppercase letters? (please enter 'y' or 'n')");
-    if (uppercase === 'y') {
+    if (uppercase === "y") {
       possibleChars = possibleChars.concat(uppercaseChars);
       numeralsPrompt();
     }
-    else if (uppercase === 'n') {
+    else if (uppercase === "n") {
       numeralsPrompt();
     }
     else {
@@ -70,11 +70,11 @@ var generateBtn = document.querySelector("#generate");
   // prompt if password should contain numbers
   function numeralsPrompt() {
     numerals = prompt("Should your password include numbers? (please enter 'y' or 'n')");
-    if (numerals === 'y') {
+    if (numerals === "y") {
       possibleChars = possibleChars.concat(numericChars);
       specialsPrompt();
     }
-    else if (numerals === 'n') {
+    else if (numerals === "n") {
       specialsPrompt();
     }
     else {
@@ -86,15 +86,15 @@ var generateBtn = document.querySelector("#generate");
   // prompt if password should contain special characters
   function specialsPrompt() {
    specials = prompt("Should your password include special characters? (please enter 'y' or 'n')");
-    if (specials === 'y') {
+    if (specials === "y") {
       possibleChars = possibleChars.concat(specialChars);
       // newPassword();
     }
-    else if (specials === 'n' && numerals === 'n' && lowercase === 'n' && uppercase ==='n') {
-      alert('Error: Please select at least one type of character to include in your password.')
+    else if (specials === "n" && numerals === "n" && lowercase === "n" && uppercase ==="n") {
+      alert("Error: Please select at least one type of character to include in your password.")
       lowercasePrompt();
     }
-    else if (specials === 'n') {
+    else if (specials === "n") {
       // newPassword();
     }
     else {
@@ -105,7 +105,7 @@ var generateBtn = document.querySelector("#generate");
 
   // Generate password based on input from user in above prompts
   function newPassword() {
-    password = '';
+    password = "";
     for (var i = 0; i < passwordLength ; i++) {
       var nextChar = (Math.floor(Math.random() * possibleChars.length));
       password += possibleChars[nextChar];
