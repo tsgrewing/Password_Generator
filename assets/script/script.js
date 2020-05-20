@@ -2,15 +2,14 @@ var possibleChars = [];
 var lowercaseChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var uppercaseChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var numericChars= ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-var specialChars = ["!", "$", "%", "&", "?", "@"];
+var specialChars = ["!", "$", "%", "&", "?", "@", "*", "+", "=", "<", ">", "_", "-", "."];
 var passwordLength;
 var lowercase;
 var uppercase;
-var numerics;
+var numerals;
 var specials;
 var pass;
-
-
+var password;
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
@@ -20,16 +19,14 @@ var generateBtn = document.querySelector("#generate");
 
 
 
-// Function to run a series of prompts for user. 
-
+//run a series of prompts for user. 
 
   // Prompt user for password length
   function lengthPrompt () { 
     passwordLength = prompt("How long does your password need to be? (8-128 characters)");
-    if (passwordLength < 8 && passwordLength > 128) {
+
+    if (passwordLength < 8 || passwordLength > 128 || (isNaN(passwordLength))) {
       alert("Error: please enter a number between 8 and 128.");
-      var passwordLength = prompt("How long does your password need to be? (8-128 characters)");
-      passwordLength = parseInt(passwordLength, 10);
       lengthPrompt();
       }
     else {
@@ -46,7 +43,6 @@ var generateBtn = document.querySelector("#generate");
       uppercasePrompt();
     }
     else if (lowercase === 'n') {
-      alert("Error: please enter 'y' or 'n'.")
       uppercasePrompt();
     }
     else {
@@ -60,11 +56,10 @@ var generateBtn = document.querySelector("#generate");
     uppercase = prompt("Should your password include uppercase letters? (please enter 'y' or 'n')");
     if (uppercase === 'y') {
       possibleChars = possibleChars.concat(uppercaseChars);
-      numericsPrompt();
+      numeralsPrompt();
     }
     else if (uppercase === 'n') {
-      alert("Error: please enter 'y' or 'n'.")
-      numericsPrompt();
+      numeralsPrompt();
     }
     else {
       alert("Error: please enter 'y' or 'n'.");
@@ -73,32 +68,34 @@ var generateBtn = document.querySelector("#generate");
   }
 
   // prompt if password should contain numbers
-  function numericsPrompt() {
-    numerics = prompt("Should your password include numbers letters? (please enter 'y' or 'n')");
-    if (numerics === 'y') {
+  function numeralsPrompt() {
+    numerals = prompt("Should your password include numbers? (please enter 'y' or 'n')");
+    if (numerals === 'y') {
       possibleChars = possibleChars.concat(numericChars);
       specialsPrompt();
     }
-    else if (numerics === 'n') {
-      alert("Error: please enter 'y' or 'n'.")
+    else if (numerals === 'n') {
       specialsPrompt();
     }
     else {
       alert("Error: please enter 'y' or 'n'.");
-      numericsPrompt();
+      numeralsPrompt();
     }
   }
 
   // prompt if password should contain special characters
   function specialsPrompt() {
-   specials = prompt("Should your password include lowercase letters? (please enter 'y' or 'n')");
+   specials = prompt("Should your password include special characters? (please enter 'y' or 'n')");
     if (specials === 'y') {
       possibleChars = possibleChars.concat(specialChars);
-      newPassword();
+      // newPassword();
+    }
+    else if (specials === 'n' && numerals === 'n' && lowercase === 'n' && uppercase ==='n') {
+      alert('Error: Please select at least one type of character to include in your password.')
+      lowercasePrompt();
     }
     else if (specials === 'n') {
-      alert("Error: please enter 'y' or 'n'.")
-      newPassword();
+      // newPassword();
     }
     else {
       alert("Error: please enter 'y' or 'n'.");
@@ -108,18 +105,23 @@ var generateBtn = document.querySelector("#generate");
 
   // Generate password based on input from user in above prompts
   function newPassword() {
-    for (var i = 0; i < passwordLength; i++) {
+    password = '';
+    for (var i = 0; i < passwordLength ; i++) {
       var nextChar = (Math.floor(Math.random() * possibleChars.length));
-      pass += possibleChars[nextChar];
+      password += possibleChars[nextChar];
     }
-    return pass;
+    return password;
   }
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  possibleChars = [];
+
+  lengthPrompt();
+  var password = newPassword();
   var passwordText = document.querySelector("#password");
-  passwordText.value = pass;
+
+  passwordText.value = password;
 }
 // Add event listener to generate button
-generateBtn.addEventListener("click", lengthPrompt);
+generateBtn.addEventListener("click", writePassword);
