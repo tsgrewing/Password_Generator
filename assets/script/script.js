@@ -142,12 +142,14 @@ function generatePassword() {
 
 // Write password to the #password input
 function writePassword() {
+  // reset global variables for each new password
   possibleChars = [];
   typesOfChars = 0;
   lowercase = false;
   uppercase = false;
   numerals = false;
   specials = false;
+  //Run the prompts and generate password
   lengthPrompt();
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
