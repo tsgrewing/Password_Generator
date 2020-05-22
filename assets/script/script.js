@@ -70,16 +70,12 @@ function specialsPrompt() {
   specials = prompt("Should your password include special characters? (please enter 'y' or 'n')");
   if (specials === "y") {
     possibleChars = possibleChars.concat(specialChars);
-    // newPassword();
   }
   else if (specials === "n" && numerals === "n" && lowercase === "n" && uppercase ==="n") {
     alert("Error: Please select at least one type of character to include in your password.")
     lowercasePrompt();
   }
-  else if (specials === "n") {
-    // newPassword();
-  }
-  else {
+  else if (specials !== 'n') {
     alert("Error: please enter 'y' or 'n'.");
     specialsPrompt();
   }
