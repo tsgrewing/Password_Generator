@@ -5,10 +5,15 @@ var numericChars= ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var specialChars = ["!", "#", "$", "%", "&,", "(", ")", "*", "+", "-", ".", "<", "=", ">", "?", "@", "[", "]", ";", "^", "_", "{", "}", "|", ":",  "~"];
 var passwordLength;
 var password;
+var typesOfChars = 0;
 var lowercase;
 var uppercase;
 var numerals;
 var specials;
+var passwordNumbers = [];
+var passwordLowercase = [];
+var passwordUppercase = [];
+var passwordSpecial = [];
 
 
 // Assignment Code
@@ -31,6 +36,7 @@ function lowercasePrompt() {
   lowercase = confirm("Should your password include lowercase letters?");
   if (lowercase) {
     possibleChars = possibleChars.concat(lowercaseChars);
+    typesOfChars ++;
     uppercasePrompt();
   }
   else if (!lowercase) {
@@ -42,6 +48,7 @@ function uppercasePrompt() {
   uppercase = confirm("Should your password include uppercase letters?");
   if (uppercase) {
     possibleChars = possibleChars.concat(uppercaseChars);
+    typesOfChars ++;
     numeralsPrompt();
   }
   else if (!uppercase) {
@@ -53,6 +60,7 @@ function numeralsPrompt() {
   numerals = confirm("Should your password include numbers?");
   if (numerals) {
     possibleChars = possibleChars.concat(numericChars);
+    typesOfChars ++;
     specialsPrompt();
   }
   else if (!numerals) {
@@ -64,6 +72,7 @@ function specialsPrompt() {
   specials = confirm("Should your password include special characters?");
   if (specials) {
     possibleChars = possibleChars.concat(specialChars);
+    typesOfChars ++;
   }
   else if (!specials && !numerals && !lowercase && !uppercase) {
     alert("Error: Please select at least one type of character to include in your password.")
@@ -73,18 +82,44 @@ function specialsPrompt() {
 // Generate password based on input from user in above prompts
 function generatePassword() {
   password = "";
+  // var distribution = Math.floor(passwordLength/typesOfChars);
+  // for (var i = 0; i < distribution ; i++) {
+    
+  // }
+  if (lowercase) {
+    Math.floor(lowercaseChars.length / possibleChars.length * passwordLength);
+    for (var i = 0; i < (passwordLength) ; i++) {
+  }
+  if (uppercase) {
+    Math.floor(uppercaseChars.length / possibleChars.length * passwordLength);
+    for (var i = 0; i < (passwordLength) ; i++) {
+  }
+  if (numerals) {
+    Math.floor(numericChars.length / possibleChars.length * passwordLength);
+    for (var i = 0; i < (passwordLength) ; i++) {
+  }
+  if (speccials) {
+    Math.floor(speccialChars.length / possibleChars.length * passwordLength);
+    for (var i = 0; i < (passwordLength) ; i++) {
+  }
 
 
-    // if(var2 < passwordLength) {}  
-      for (var i = 0; i < (passwordLength ) ; i++) {
-        var nextChar = (Math.floor(Math.random() * possibleChars.length));
-        password += possibleChars[nextChar];
-      }
+  if (password.length < password.length){
+    for (var i = 0; i < (passwordLength) ; i++) {
+      var nextChar = (Math.floor(Math.random() * possibleChars.length));
+      password += possibleChars[nextChar];
+    }
+  }
   return password;
 }
 // Write password to the #password input
 function writePassword() {
   possibleChars = [];
+  typesOfChars = 0;
+  lowercase = false;
+  uppercase = false;
+  numerals = false;
+  specials = false;
   lengthPrompt();
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
