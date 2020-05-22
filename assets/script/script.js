@@ -5,16 +5,10 @@ var numericChars= ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var specialChars = ["!", "#", "$", "%", "&", "(", ")", "*", "+", "-", ".", "<", "=", ">", "?", "@", "[", "]", ";", "^", "_", "{", "}", "|", ":",  "~"];
 var passwordLength;
 var password;
-var typesOfChars = 0;
 var lowercase;
 var uppercase;
 var numerals;
 var specials;
-var passwordNumbers = [];
-var passwordLowercase = [];
-var passwordUppercase = [];
-var passwordSpecial = [];
-
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
@@ -36,7 +30,6 @@ function lowercasePrompt() {
   lowercase = confirm("Should your password include lowercase letters?");
   if (lowercase) {
     possibleChars = possibleChars.concat(lowercaseChars);
-    typesOfChars ++;
     uppercasePrompt();
   }
   else if (!lowercase) {
@@ -48,7 +41,6 @@ function uppercasePrompt() {
   uppercase = confirm("Should your password include uppercase letters?");
   if (uppercase) {
     possibleChars = possibleChars.concat(uppercaseChars);
-    typesOfChars ++;
     numeralsPrompt();
   }
   else if (!uppercase) {
@@ -60,7 +52,6 @@ function numeralsPrompt() {
   numerals = confirm("Should your password include numbers?");
   if (numerals) {
     possibleChars = possibleChars.concat(numericChars);
-    typesOfChars ++;
     specialsPrompt();
   }
   else if (!numerals) {
@@ -72,7 +63,6 @@ function specialsPrompt() {
   specials = confirm("Should your password include special characters?");
   if (specials) {
     possibleChars = possibleChars.concat(specialChars);
-    typesOfChars ++;
   }
   else if (!specials && !numerals && !lowercase && !uppercase) {
     alert("Error: Please select at least one type of character to include in your password.")
@@ -144,7 +134,6 @@ function generatePassword() {
 function writePassword() {
   // reset global variables for each new password
   possibleChars = [];
-  typesOfChars = 0;
   lowercase = false;
   uppercase = false;
   numerals = false;
