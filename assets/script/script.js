@@ -2,7 +2,7 @@ var possibleChars = [];
 var lowercaseChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var uppercaseChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var numericChars= ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var specialChars = ["!", "#", "$", "%", "&,", "(", ")", "*", "+", "-", ".", "<", "=", ">", "?", "@", "[", "]", ";", "^", "_", "{", "}", "|", ":",  "~"];
+var specialChars = ["!", "#", "$", "%", "&", "(", ")", "*", "+", "-", ".", "<", "=", ">", "?", "@", "[", "]", ";", "^", "_", "{", "}", "|", ":",  "~"];
 var passwordLength;
 var password;
 var typesOfChars = 0;
@@ -81,37 +81,65 @@ function specialsPrompt() {
 }
 // Generate password based on input from user in above prompts
 function generatePassword() {
-  password = "";
-  // var distribution = Math.floor(passwordLength/typesOfChars);
-  // for (var i = 0; i < distribution ; i++) {
-    
-  // }
+  password = [];
+  passArray = [];
+
+  // calculating what percentage of the password should be pulled from each type of character, pulling those characters from the strings, and adding them to an array
   if (lowercase) {
-    Math.floor(lowercaseChars.length / possibleChars.length * passwordLength);
-    for (var i = 0; i < (passwordLength) ; i++) {
-  }
+    var lowercasePercentage = Math.floor(lowercaseChars.length / possibleChars.length * passwordLength);
+    console.log(lowercasePercentage);
+    for (var i = 0; i < lowercasePercentage ; i++) {
+      var nextChar = (Math.floor(Math.random() * lowercaseChars.length));
+      passArray = passArray.concat(lowercaseChars[nextChar]);
+    };
+  };
   if (uppercase) {
-    Math.floor(uppercaseChars.length / possibleChars.length * passwordLength);
-    for (var i = 0; i < (passwordLength) ; i++) {
-  }
+    var uppercasePercentage = Math.floor(uppercaseChars.length / possibleChars.length * passwordLength);
+    console.log(uppercasePercentage);
+    for (var i = 0; i < uppercasePercentage ; i++) {
+      var nextChar = (Math.floor(Math.random() * uppercaseChars.length));
+      passArray = passArray.concat(uppercaseChars[nextChar]);
+    };
+  };
   if (numerals) {
-    Math.floor(numericChars.length / possibleChars.length * passwordLength);
-    for (var i = 0; i < (passwordLength) ; i++) {
-  }
-  if (speccials) {
-    Math.floor(speccialChars.length / possibleChars.length * passwordLength);
-    for (var i = 0; i < (passwordLength) ; i++) {
-  }
-
-
-  if (password.length < password.length){
-    for (var i = 0; i < (passwordLength) ; i++) {
+    var numeralPercentage = Math.round(numericChars.length / possibleChars.length * passwordLength);
+    console.log(numeralPercentage);
+    for (var i = 0; i < numeralPercentage ; i++) {
+      var nextChar = (Math.floor(Math.random() * numericChars.length));
+      passArray = passArray.concat(numericChars[nextChar]);
+    };
+  };  
+  if (specials) {
+    var specialPercentage = Math.floor(specialChars.length / possibleChars.length * passwordLength);
+    console.log(specialPercentage);
+    for (var i = 0; i < specialPercentage ; i++) {
+      var nextChar = (Math.floor(Math.random() * specialChars.length));
+      passArray = passArray.concat(specialChars[nextChar]);
+    };
+  };
+  console.log(passArray);
+  // Accounting for any remaining characters needed and pulling them from the array of all available characters
+  if (passArray.length < passwordLength){
+    var difference = (passwordLength - passArray.length);
+    console.log(difference);
+    for (var i = 0; i < difference ; i++) {
       var nextChar = (Math.floor(Math.random() * possibleChars.length));
-      password += possibleChars[nextChar];
-    }
-  }
+      passArray = passArray.concat(possibleChars[nextChar]);
+    };
+  };
+  // Durstenfeld Shuffle Algorithm, to randomize the order of the characters in passArray
+  for (var i = passArray.length -1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = passArray[i];
+    passArray[i] = passArray[j];
+    passArray[j] = temp;
+  };
+  console.log(passArray.length)
+  // Join the array and pass it to password then return 'password'
+  password = passArray.join('');
   return password;
-}
+};
+
 // Write password to the #password input
 function writePassword() {
   possibleChars = [];
@@ -124,6 +152,7 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
+  console.log(password.length)
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
